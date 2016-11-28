@@ -2,7 +2,7 @@ import os, string, random
 from sharex_uploader import app
 from flask import render_template, redirect, url_for, request, send_from_directory, abort
 from werkzeug.utils import secure_filename
-import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def allowed_file(filename):
@@ -28,9 +28,7 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     password = request.form.get('password')
-    salted_pw = password + app.config['SALT']
-    hashed_pw = hashlib.md5(salted_pw.encode())
-    if hashed_pw.hexdigest() == app.config['HASHED_PASSWORD']:
+    if check_password_hash(app.config['HASHED_PASSWORD'], password):
         file = request.files['file']
         if file and not allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -45,7 +43,6 @@ def upload():
             abort(403)
     else:
         abort(403)
-
 
 @app.route('/i/<filename>')
 def uploaded_file(filename):
