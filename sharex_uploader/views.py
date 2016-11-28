@@ -2,6 +2,7 @@ import os, string, random
 from sharex_uploader import app
 from flask import render_template, redirect, url_for, request, send_from_directory, abort
 from werkzeug.utils import secure_filename
+import hashlib
 
 
 def allowed_file(filename):
@@ -27,13 +28,15 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     password = request.form.get('password')
-    if password == app.config['PASSWORD']:
+    salted_pw = password + app.config['HASH']
+    hashed_pw = hashlib.md5(salted_pw.encode())
+    if hashed_pw.hexdigest() == app.config['HASHED_PASSWORD']:
         file = request.files['file']
         if file and not allowed_file(file.filename):
             filename = secure_filename(file.filename)
             extension = '.' in filename and filename.rsplit('.', 1)[1]
             filename = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in
-                               range(app.config['RANDSTRING_LENGTH']))
+                               range(app.config['RANDOM_STRING_LENGTH']))
             filename = filename + "." + extension
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',

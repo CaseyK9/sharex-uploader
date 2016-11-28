@@ -6,9 +6,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'i/')
-app.config['DISALLOWED_EXTENSIONS'] = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-app.config['RANDSTRING_LENGTH'] = 5
-app.config['PASSWORD'] = ""
+app.config['DISALLOWED_EXTENSIONS'] = {'exe'}
+app.config['RANDOM_STRING_LENGTH'] = 5
+app.config['HASHED_PASSWORD'] = ""
+app.config['HASH'] = ""
 app_options = {}
 app.debug = False
 app.port = 9000
