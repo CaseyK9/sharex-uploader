@@ -71,8 +71,10 @@
         }
 
         .fixed {
-            width: 180px;
-            margin-left: 15px;
+            background: transparent;
+            border: none !important;
+            font-size: 0;
+
         }
 
         .flex-item {
@@ -90,9 +92,10 @@
     <form action="upload" method="post" enctype="multipart/form-data">
         <div class="file-field input-field flex-container">
             <div class="file-path-wrapper flex-item">
-                <input class="file-path validate" type="text" placeholder="Drag or click to upload" autocomplete="off">
+                <input class="file-path validate file" type="text" placeholder="Drag or click to upload"
+                       autocomplete="off">
             </div>
-            <div class="btn red darken-3 fixed">
+            <div class="fixed">
                 <span>Select file</span>
                 <input type="file" name="file" autocomplete="off">
             </div>
