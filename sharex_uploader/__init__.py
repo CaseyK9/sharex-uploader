@@ -5,7 +5,7 @@ from flask import Flask
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'i/')
+app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/uploads/')
 app.config['DISALLOWED_EXTENSIONS'] = {'exe'}
 app.config['RANDOM_STRING_LENGTH'] = 5
 app.config['HASHED_PASSWORD'] = "" #DON'T COMMIT THIS YOU FUCKING IDIOT
