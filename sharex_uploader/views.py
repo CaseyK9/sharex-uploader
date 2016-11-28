@@ -28,7 +28,7 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     password = request.form.get('password')
-    salted_pw = password + app.config['HASH']
+    salted_pw = password + app.config['SALT']
     hashed_pw = hashlib.md5(salted_pw.encode())
     if hashed_pw.hexdigest() == app.config['HASHED_PASSWORD']:
         file = request.files['file']
