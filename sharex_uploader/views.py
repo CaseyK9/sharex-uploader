@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-def allowed_file(filename):
+def disallowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['DISALLOWED_EXTENSIONS']
 
@@ -30,7 +30,7 @@ def upload():
     password = request.form.get('password')
     if check_password_hash(app.config['HASHED_PASSWORD'], password):
         file = request.files['file']
-        if file and not allowed_file(file.filename):
+        if file and not disallowed_file(file.filename):
             filename = secure_filename(file.filename)
             extension = '.' in filename and filename.rsplit('.', 1)[1]
             filename = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in
