@@ -76,7 +76,7 @@ window.onload = function () {
     canvas.addEventListener('mousewheel', handleScroll, false);
 };
 
-gkhead.src = '{{ url_for('static', filename="uploads/" + requestedfile) }}';
+gkhead.src = $('#imageviewer').attr("currentimage");;
 
 // Adds ctx.getTransform() - returns an SVGMatrix
 // Adds ctx.transformedPoint(x,y) - returns an SVGPoint
