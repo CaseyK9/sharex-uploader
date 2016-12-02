@@ -2,7 +2,7 @@ import os, string, random
 from sharex_uploader import app
 from flask import render_template, redirect, url_for, request, send_from_directory, abort
 from werkzeug.utils import secure_filename
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 
 def disallowed_file(filename):
@@ -11,12 +11,12 @@ def disallowed_file(filename):
 
 
 @app.errorhandler(403)
-def accessdenied(e):
+def access_denied(e):
     return render_template('40x.html'), 403
 
 
 @app.errorhandler(500)
-def errored(e):
+def error(e):
     return render_template('40x.html'), 500
 
 
@@ -44,6 +44,7 @@ def upload():
     else:
         abort(403)
 
+
 @app.route('/i/<filename>')
 def uploaded_file(filename):
     if os.path.isfile(app.config['UPLOAD_FOLDER'] + "/" + filename):
@@ -52,6 +53,6 @@ def uploaded_file(filename):
             return render_template('imageviewer.html', requestedfile=filename)
         else:
             return send_from_directory(app.config['UPLOAD_FOLDER'],
-                                   filename)
+                                       filename)
     else:
         abort(403)
