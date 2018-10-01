@@ -1,3 +1,4 @@
+werkzeug
 flask
 flask_script
 flask_wtf
