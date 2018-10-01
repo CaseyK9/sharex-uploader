@@ -3,7 +3,8 @@
 Python flask based sharex-uploader with one master password. No compression. Self-Hosted.
 Includes web-gui for manual upload.
 
-##Sharex custom uploader config:
+#Sharex custom uploader config:
+
 `{
   "DestinationType": "ImageUploader, TextUploader, FileUploader",
   "RequestURL": "YOURDOMAIN.COM/upload",

@@ -1,8 +1,12 @@
-import os, string, random
-from sharex_uploader import app
+from os import path
+from random import SystemRandom
+from string import ascii_uppercase, digits
+
 from flask import render_template, redirect, url_for, request, send_from_directory, abort
-from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
+from werkzeug.utils import secure_filename
+
+from sharex_uploader import app
 
 
 def disallowed_file(filename):
@@ -11,12 +15,12 @@ def disallowed_file(filename):
 
 
 @app.errorhandler(403)
-def access_denied(e):
+def access_denied():
     return render_template('40x.html'), 403
 
 
 @app.errorhandler(500)
-def error(e):
+def error():
     return render_template('40x.html'), 500
 
 
@@ -33,10 +37,10 @@ def upload():
         if file and not disallowed_file(file.filename):
             filename = secure_filename(file.filename)
             extension = '.' in filename and filename.rsplit('.', 1)[1]
-            filename = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in
+            filename = ''.join(SystemRandom().choice(ascii_uppercase + digits) for _ in
                                range(app.config['RANDOM_STRING_LENGTH']))
             filename = filename + "." + extension
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
         else:
@@ -47,8 +51,8 @@ def upload():
 
 @app.route('/i/<filename>')
 def uploaded_file(filename):
-    if os.path.isfile(app.config['UPLOAD_FOLDER'] + "/" + filename):
+    if path.isfile(app.config['UPLOAD_FOLDER'] + "/" + filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'],
-                                       filename)
+                                   filename)
     else:
         abort(403)
