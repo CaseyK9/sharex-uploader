@@ -48,11 +48,7 @@ def upload():
 @app.route('/i/<filename>')
 def uploaded_file(filename):
     if os.path.isfile(app.config['UPLOAD_FOLDER'] + "/" + filename):
-        extension = '.' in filename and filename.rsplit('.', 1)[1]
-        if extension in ['jpeg', 'jpg', 'png']:
-            return render_template('imageviewer.html', requestedfile=filename)
-        else:
-            return send_from_directory(app.config['UPLOAD_FOLDER'],
+        return send_from_directory(app.config['UPLOAD_FOLDER'],
                                        filename)
     else:
         abort(403)
