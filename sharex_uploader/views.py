@@ -15,12 +15,12 @@ def disallowed_file(filename):
 
 
 @app.errorhandler(403)
-def access_denied():
+def access_denied(e):
     return render_template('40x.html'), 403
 
 
 @app.errorhandler(500)
-def error():
+def error(e):
     return render_template('40x.html'), 500
 
 
