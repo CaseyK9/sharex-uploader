@@ -36,10 +36,10 @@ def upload():
         file = request.files['file']
         if file and not disallowed_file(file.filename):
             filename = secure_filename(file.filename)
-            extension = '.' in filename and filename.rsplit('.', 1)[1]
+            extension = path.splitext(filename)[1]
             filename = ''.join(SystemRandom().choice(ascii_uppercase + digits) for _ in
                                range(app.config['RANDOM_STRING_LENGTH']))
-            filename = filename + "." + extension
+            filename = filename + extension
             file.save(path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
