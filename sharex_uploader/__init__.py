@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/uploads/')
 app.config['DISALLOWED_EXTENSIONS'] = {'exe'}
 app.config['RANDOM_STRING_LENGTH'] = 5
-with open(".hpass") as hpass:
+with open("sharex_uploader/.hpass") as hpass:
     app.config['HASHED_PASSWORD'] = hpass.read()  # DON'T COMMIT THIS YOU FUCKING IDIOT
 app_options = {}
 app.debug = False
